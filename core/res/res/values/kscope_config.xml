@@ -46,4 +46,11 @@
     <!-- Whether devices suports in-display fingerprint when screen is off -->
     <bool name="config_supportsScreenOffUdfps">false</bool>
 
+    <!-- Defines the actions shown in advanced reboot submenu -->
+    <string-array name="config_rebootActionsList" translatable="false">
+        <item>restart</item>
+        <item>reboot_recovery</item>
+        <item>reboot_bootloader</item>
+    </string-array>
+
 </resources>
