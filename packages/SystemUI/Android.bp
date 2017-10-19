@@ -99,6 +99,7 @@ android_library {
         "themelib",
     ],
     manifest: "AndroidManifest.xml",
+    additional_manifests: ["KscopeManifest.xml"],
 
     kotlincflags: ["-Xjvm-default=enable"],
 
