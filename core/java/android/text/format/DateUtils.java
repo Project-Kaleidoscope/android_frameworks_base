@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2006 The Android Open Source Project
+ * Copyright (C) 2015-2021 The MoKee Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,6 +29,7 @@ import android.icu.util.MeasureUnit;
 import android.os.Build;
 
 import com.android.internal.R;
+import com.android.internal.util.kscope.ChineseCheckerUtils;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -56,6 +58,14 @@ public class DateUtils
     public static final long HOUR_IN_MILLIS = MINUTE_IN_MILLIS * 60;
     public static final long DAY_IN_MILLIS = HOUR_IN_MILLIS * 24;
     public static final long WEEK_IN_MILLIS = DAY_IN_MILLIS * 7;
+
+    /**
+     * Exact time display for Chinese
+     */
+    private static final String[] sAmPmCN = new String[] {
+        "凌晨", "黎明", "早晨", "上午", "中午", "下午", "傍晚", "晚上", "深夜"
+    };
+
     /**
      * @deprecated Not all years have the same number of days, and this constant is actually the
      * length of 364 days. Please use other date/time constructs such as
@@ -233,6 +243,40 @@ public class DateUtils
     public static String getAMPMString(int ampm) {
         String[] amPm = DateFormat.getIcuDateFormatSymbols(Locale.getDefault()).getAmPmStrings();
         return amPm[ampm - Calendar.AM];
+    }
+
+    /**
+     * Return a Chinese localized string for AM or PM.
+     * @hide
+     */
+    public static String getAMPMCNString(int hours, int ampm) {
+        if (ampm == Calendar.AM) {
+            if (hours < 5) {
+                return sAmPmCN[0];
+            } else if (hours >= 5 && hours < 7) {
+                return sAmPmCN[1];
+            } else if (hours >= 7 && hours < 9) {
+                return sAmPmCN[2];
+            } else if (hours >= 9 && hours < 12) {
+                return sAmPmCN[3];
+            } else {
+                return sAmPmCN[0];
+            }
+        } else {
+            if (hours < 1) {
+                return sAmPmCN[4];
+            } else if (hours >= 1 && hours < 6) {
+                return sAmPmCN[5];
+            } else if (hours >= 6 && hours < 7) {
+                return sAmPmCN[6];
+            } else if (hours >= 7 && hours < 10) {
+                return sAmPmCN[7];
+            } else if (hours >= 10 && hours < 12) {
+                return sAmPmCN[8];
+            } else {
+                return sAmPmCN[4];
+            }
+        }
     }
 
     /**

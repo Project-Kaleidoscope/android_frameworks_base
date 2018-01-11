@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2006 The Android Open Source Project
+ * Copyright (C) 2015-2021 The MoKee Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,6 +31,8 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.SpannedString;
 import android.text.TextUtils;
+
+import com.android.internal.util.kscope.ChineseCheckerUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -516,7 +519,12 @@ public class DateFormat {
             switch (c) {
                 case 'A':
                 case 'a':
-                    replacement = amPm[inDate.get(Calendar.AM_PM) - Calendar.AM];
+                    if (ChineseCheckerUtils.isSupportLanguage(false)) {
+                        replacement = DateUtils.getAMPMCNString(
+                                inDate.get(Calendar.HOUR), inDate.get(Calendar.AM_PM));
+                    } else {
+                        replacement = amPm[inDate.get(Calendar.AM_PM) - Calendar.AM];
+                    }
                     break;
                 case 'd':
                     replacement = zeroPad(inDate.get(Calendar.DATE), count);

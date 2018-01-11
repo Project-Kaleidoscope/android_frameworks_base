@@ -97,7 +97,7 @@ public class Clock extends TextView implements
     private static final int AM_PM_STYLE_SMALL   = 1;
     private static final int AM_PM_STYLE_NORMAL  = 2;
 
-    private int mAmPmStyle = AM_PM_STYLE_GONE;
+    private int mAmPmStyle = AM_PM_STYLE_NORMAL;
     private boolean mShowSeconds;
     private Handler mSecondsHandler;
 
@@ -413,7 +413,9 @@ public class Clock extends TextView implements
         } else {
             sdf = mClockFormat;
         }
-        String result = sdf.format(mCalendar.getTime());
+        String result = is24
+                ? sdf.format(mCalendar.getTime())
+                : DateFormat.format(format, mCalendar.getTime()).toString();
 
         if (mAmPmStyle != AM_PM_STYLE_NORMAL) {
             int magic1 = result.indexOf(MAGIC1);
