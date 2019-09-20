@@ -10587,6 +10587,12 @@ public final class Settings {
         @Readable
         public static final String STATUS_BAR_SHOW_LYRIC = "status_bar_show_lyric";
 
+        /**
+         * Whether we should inverse layout direction for navigation bar.
+         * @hide
+         */
+        public static final String NAVIGATION_BAR_INVERSE = "navigation_bar_inverse";
+
     }
 
     /**
