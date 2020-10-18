@@ -122,6 +122,9 @@ public class NotificationShadeWindowViewController {
     private boolean mDoubleTapToSleepEnabled;
     private int mQuickQsOffsetHeight;
 
+    // custom additions start
+    private boolean mDoubleTapEnabledNative;
+
     @Inject
     public NotificationShadeWindowViewController(
             NotificationWakeUpCoordinator coordinator,
@@ -206,12 +209,16 @@ public class NotificationShadeWindowViewController {
                 case DOUBLE_TAP_SLEEP_GESTURE:
                     mDoubleTapToSleepEnabled = TunerService.parseIntegerSwitch(newValue, false);
                     break;
+                case Settings.Secure.DOUBLE_TAP_TO_WAKE:
+                    mDoubleTapEnabledNative = TunerService.parseIntegerSwitch(newValue, false);
+                    break;
             }
         };
         mTunerService.addTunable(tunable,
                 Settings.Secure.DOZE_DOUBLE_TAP_GESTURE,
                 Settings.Secure.DOZE_TAP_SCREEN_GESTURE,
-                DOUBLE_TAP_SLEEP_GESTURE);
+                DOUBLE_TAP_SLEEP_GESTURE,
+                Settings.Secure.DOUBLE_TAP_TO_WAKE);
         mQuickQsOffsetHeight = mView.getResources().getDimensionPixelSize(
                 com.android.internal.R.dimen.quick_qs_offset_height);
 
@@ -234,7 +241,7 @@ public class NotificationShadeWindowViewController {
                             mPowerManager.goToSleep(e.getEventTime());
                             return true;
                         }
-                        if (mDoubleTapEnabled || mSingleTapEnabled) {
+                        if (mDoubleTapEnabled || mSingleTapEnabled || mDoubleTapEnabledNative) {
                             mService.wakeUpIfDozing(
                                     SystemClock.uptimeMillis(), mView, "DOUBLE_TAP");
                             return true;
