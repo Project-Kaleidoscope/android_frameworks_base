@@ -325,31 +325,23 @@ public class TriStateUiControllerImpl implements ConfigurationListener, TriState
                         }
                         positionX = res.getDimensionPixelSize(
                             R.dimen.tri_state_up_dialog_position_deep);
+                        positionY2 = res.getDimensionPixelSize(
+                            com.android.internal.R.dimen.status_bar_height);
+                        bg = R.drawable.dialog_tri_state_middle_bg;
                         if (mTriStateMode != MODE_SILENT) {
                             if (mTriStateMode != MODE_VIBRATE) {
                                 if (mTriStateMode == MODE_NORMAL) {
-                                    positionY =
-                                        res.getDimensionPixelSize(
-                                            R.dimen.tri_state_down_dialog_position)
-                                            + res.getDimensionPixelSize(
-                                                com.android.internal.R.dimen.status_bar_height);
+                                    positionY2 += res.getDimensionPixelSize(
+                                                    R.dimen.tri_state_down_dialog_position);
+                                    break;
                                 }
-                                bg = R.drawable.dialog_tri_state_middle_bg;
-                                break;
                             }
-                            positionY =
-                                res.getDimensionPixelSize(
-                                    R.dimen.tri_state_middle_dialog_position)
-                                    + res.getDimensionPixelSize(
-                                        com.android.internal.R.dimen.status_bar_height);
-                        } else {
-                            positionY = res.getDimensionPixelSize(
-                                R.dimen.tri_state_up_dialog_position)
-                                + res.getDimensionPixelSize(
-                                    com.android.internal.R.dimen.status_bar_height);
+                            positionY2 += res.getDimensionPixelSize(
+                                                R.dimen.tri_state_middle_dialog_position);
+                            break;
                         }
-                        positionY2 = positionY;
-                        bg = R.drawable.dialog_tri_state_middle_bg;
+                        positionY2 += res.getDimensionPixelSize(R.dimen.tri_state_up_dialog_position);
+                        break;
                     case ROTATION_270:
                         if (isTsKeyRight) {
                             gravity = 85;
