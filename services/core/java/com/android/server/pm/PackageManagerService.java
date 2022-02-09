@@ -416,6 +416,8 @@ import com.android.server.wm.ActivityTaskManagerInternal;
 import dalvik.system.CloseGuard;
 import dalvik.system.VMRuntime;
 
+import ink.kaleidoscope.server.GmsManagerService;
+
 import libcore.io.IoUtils;
 import libcore.util.EmptyArray;
 import libcore.util.HexEncoding;
@@ -8981,6 +8983,8 @@ public class PackageManagerService extends IPackageManager.Stub
 
     @Override
     public PackageInfo getPackageInfo(String packageName, int flags, int userId) {
+        if (GmsManagerService.shouldHide(userId, packageName))
+            return null;
         return mComputer.getPackageInfo(packageName, flags, userId);
     }
 
@@ -9174,6 +9178,8 @@ public class PackageManagerService extends IPackageManager.Stub
 
     @Override
     public ApplicationInfo getApplicationInfo(String packageName, int flags, int userId) {
+        if (GmsManagerService.shouldHide(userId, packageName))
+            return null;
         return mComputer.getApplicationInfo(packageName, flags, userId);
     }
 
@@ -11473,7 +11479,8 @@ public class PackageManagerService extends IPackageManager.Stub
 
     @Override
     public ParceledListSlice<PackageInfo> getInstalledPackages(int flags, int userId) {
-        return mComputer.getInstalledPackages(flags, userId);
+        return GmsManagerService.recreatePackageList(
+                        userId, mComputer.getInstalledPackages(flags, userId));
     }
 
     private void addPackageHoldingPermissions(ArrayList<PackageInfo> list, PackageSetting ps,
@@ -11550,7 +11557,8 @@ public class PackageManagerService extends IPackageManager.Stub
     public ParceledListSlice<ApplicationInfo> getInstalledApplications(int flags, int userId) {
         final int callingUid = Binder.getCallingUid();
         return new ParceledListSlice<>(
-                getInstalledApplicationsListInternal(flags, userId, callingUid));
+                GmsManagerService.recreateApplicationList(userId,
+                    getInstalledApplicationsListInternal(flags, userId, callingUid)));
     }
 
     private List<ApplicationInfo> getInstalledApplicationsListInternal(int flags, int userId,
