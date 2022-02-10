@@ -205,18 +205,11 @@ public class WalletActivity extends LifecycleActivity implements
     protected void onResume() {
         super.onResume();
         mWalletScreenController.queryWalletCards();
-        mKeyguardViewManager.requestFp(
-                true,
-                Utils.getColorAttrDefaultColor(
-                        this, com.android.internal.R.attr.colorAccentPrimary));
-        mKeyguardViewManager.requestFace(true);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mKeyguardViewManager.requestFp(false, -1);
-        mKeyguardViewManager.requestFace(false);
     }
 
     @Override

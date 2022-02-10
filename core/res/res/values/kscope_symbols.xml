@@ -28,4 +28,7 @@
     <java-symbol type="string" name="optimized_charge_notification_title" />
     <java-symbol type="string" name="optimized_charge_notification_text" />
 
+    <!-- Enable face auth only when swiping security view -->
+    <java-symbol type="bool" name="config_faceAuthOnlyOnSecurityView" />
+
 </resources>

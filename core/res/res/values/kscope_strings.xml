@@ -6,4 +6,7 @@
     <string name="optimized_charge_notification_title">Charging suspended</string>
     <string name="optimized_charge_notification_text">Charging suspended because of optimized charging policy</string>
 
+    <!-- Face unlock -->
+    <string name="face_unlock_disabled_idle">Face unlock disabled due to inactivity</string>
+
 </resources>
