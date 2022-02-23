@@ -94,6 +94,8 @@ public class NavigationBarInflaterView extends FrameLayout
             Settings.Secure.NAVIGATION_BAR_HINT;
     private static final String OVERLAY_NAVIGATION_HIDE_HINT =
             "ink.kaleidoscope.overlay.customization.navbar.nohint";
+    private static final String OVERLAY_LAUNCHER3_HIDE_HINT =
+            "ink.kaleidoscope.overlay.customization.launcher3.nohint";
 
     protected LayoutInflater mLayoutInflater;
     protected LayoutInflater mLandscapeInflater;
@@ -249,6 +251,7 @@ public class NavigationBarInflaterView extends FrameLayout
         final int userId = ActivityManager.getCurrentUser();
         try {
             iom.setEnabled(OVERLAY_NAVIGATION_HIDE_HINT, state, userId);
+            iom.setEnabled(OVERLAY_LAUNCHER3_HIDE_HINT, state, userId);
             if (state) {
                 // As overlays are also used to apply navigation mode, it is needed to set
                 // our customization overlay to highest priority to ensure it is applied.
