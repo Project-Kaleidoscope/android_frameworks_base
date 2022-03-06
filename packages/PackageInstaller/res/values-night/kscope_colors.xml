@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="kscope_installer_window_background">@android:color/system_neutral1_900</color>
+
+    <!-- Cancel button -->
+    <color name="kscope_negative_button_color_normal">#FF1C1C1C</color>
+    <color name="kscope_negative_button_color_disabled">#26FFFFFF</color>
+    <color name="kscope_negative_button_color_rippled">#1AFFFFFF</color>
+
+    <!-- Install/Ok Button -->
+    <color name="kscope_positive_button_color_disabled">#26FFFFFF</color>
+
+</resources>

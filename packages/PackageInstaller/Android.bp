@@ -44,6 +44,7 @@ android_app {
 
     static_libs: [
         "xz-java",
+        "androidx.appcompat_appcompat",
         "androidx.leanback_leanback",
     ],
 }

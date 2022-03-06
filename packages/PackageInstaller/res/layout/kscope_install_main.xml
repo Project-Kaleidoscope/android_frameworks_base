@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/apk_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="55dp">
+
+        <ImageView
+            android:id="@+id/app_icon"
+            android:layout_width="64dp"
+            android:layout_height="64dp" />
+
+        <TextView
+            android:id="@+id/app_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:paddingHorizontal="25dp"
+            style="@android:style/TextAppearance.Material.Title" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true">
+
+        <LinearLayout
+            android:id="@+id/staging"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="invisible">
+
+            <ProgressBar
+                android:id="@+id/progress_indeterminate"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="8dp"
+                android:indeterminate="true" />
+
+            <TextView
+                style="@android:style/TextAppearance.Material.Subhead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/message_staging" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/installing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="invisible">
+
+            <ProgressBar
+                android:id="@+id/progress"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="8dp"
+                android:indeterminate="true" />
+
+            <TextView
+                style="@android:style/TextAppearance.Material.Subhead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/installing" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/install_status_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/install_status_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="8dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/install_tip"
+                style="@android:style/TextAppearance.Material.Subhead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginVertical="20dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingHorizontal="24dp">
+
+        <Button
+            android:id="@+id/installer_cancel"
+            style="@style/Kscope.PackageInstaller.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/kscope_negative_button"
+            android:text="@string/cancel" />
+
+        <Space
+            android:id="@+id/button_space"
+            android:layout_width="25dp"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/installer_install"
+            style="@style/Kscope.PackageInstaller.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/kscope_positive_button"
+            android:text="@string/install"
+            android:textColor="#ffffff" />
+
+    </LinearLayout>
+
+</RelativeLayout>
