@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="kscope_main_color">@android:color/system_accent1_600</color>
+    <color name="kscope_installer_window_background">@android:color/system_neutral1_50</color>
+
+    <!-- Cancel button -->
+    <color name="kscope_negative_button_color_normal">#FFEDEDED</color>
+    <color name="kscope_negative_button_color_disabled">#26000000</color>
+    <color name="kscope_negative_button_color_rippled">#1A000000</color>
+    <color name="kscope_negative_button_text_color_normal">#FF000000</color>
+    <color name="kscope_negative_button_text_color_disabled">#77000000</color>
+
+    <!-- Install/Ok Button -->
+    <color name="kscope_positive_button_color_normal">@color/kscope_main_color</color>
+    <color name="kscope_positive_button_color_disabled">#26000000</color>
+    <color name="kscope_positive_button_color_rippled">#1AFFFFFF</color>
+    <color name="kscope_positive_button_text_color_normal">#FFFFFFFF</color>
+    <color name="kscope_positive_button_text_color_disabled">#77FFFFFF</color>
+
+    <color name="kscope_install_done_color">#FF43A047</color>
+    <color name="kscope_install_failed_color">#FFE53935</color>
+
+</resources>

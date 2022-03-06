@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Kscope.PackageInstaller.Main" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:windowLightNavigationBar">@bool/kscope_is_light_theme</item>
+        <item name="android:windowLightStatusBar">@bool/kscope_is_light_theme</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarDividerColor">@android:color/transparent</item>
+        <item name="colorAccent">@color/kscope_main_color</item>
+        <item name="android:windowBackground">@color/kscope_installer_window_background</item>
+    </style>
+
+    <style name="Theme.Kscope.PackageInstaller.Main.NoAnim">
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
+
+</resources>

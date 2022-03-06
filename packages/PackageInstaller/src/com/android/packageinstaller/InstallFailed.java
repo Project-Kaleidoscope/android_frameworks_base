@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInstaller;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,10 +37,12 @@ import com.android.internal.app.AlertActivity;
 
 import java.io.File;
 
+import ink.kscope.packageinstaller.activity.BasePackageInstallerActivity;
+
 /**
  * Installation failed: Return status code to the caller or display failure UI to user
  */
-public class InstallFailed extends AlertActivity {
+public class InstallFailed extends BasePackageInstallerActivity {
     private static final String LOG_TAG = InstallFailed.class.getSimpleName();
 
     /** Label of the app that failed to install */
@@ -53,26 +56,26 @@ public class InstallFailed extends AlertActivity {
     private void setExplanationFromErrorCode(int statusCode) {
         Log.d(LOG_TAG, "Installation status code: " + statusCode);
 
-        View viewToEnable;
+        int failedReason;
         switch (statusCode) {
             case PackageInstaller.STATUS_FAILURE_BLOCKED:
-                viewToEnable = requireViewById(R.id.install_failed_blocked);
+                failedReason = R.string.install_failed_blocked;
                 break;
             case PackageInstaller.STATUS_FAILURE_CONFLICT:
-                viewToEnable = requireViewById(R.id.install_failed_conflict);
+                failedReason = R.string.install_failed_conflict;
                 break;
             case PackageInstaller.STATUS_FAILURE_INCOMPATIBLE:
-                viewToEnable = requireViewById(R.id.install_failed_incompatible);
+                failedReason = R.string.install_failed_incompatible;
                 break;
             case PackageInstaller.STATUS_FAILURE_INVALID:
-                viewToEnable = requireViewById(R.id.install_failed_invalid_apk);
+                failedReason = R.string.install_failed_invalid_apk;
                 break;
             default:
-                viewToEnable = requireViewById(R.id.install_failed);
+                failedReason = R.string.install_failed;
                 break;
         }
 
-        viewToEnable.setVisibility(View.VISIBLE);
+        mInstallTipView.setText(failedReason);
     }
 
     @Override
@@ -112,12 +115,13 @@ public class InstallFailed extends AlertActivity {
             // Store label for dialog
             mLabel = as.label;
 
-            mAlert.setIcon(as.icon);
-            mAlert.setTitle(as.label);
-            mAlert.setView(R.layout.install_content_view);
-            mAlert.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.done),
-                    (ignored, ignored2) -> finish(), null);
-            setupAlert();
+            hideCancelBtn();
+            mAppIconView.setImageDrawable(as.icon);
+            mAppLabelView.setText(as.label);
+            mInstallBtn.setText(R.string.done);
+            mInstallBtn.setOnClickListener(view -> finish());
+            mInstallStatusIconView.setImageResource(R.drawable.ic_install_failed);
+            mInstallStatusIconView.setVisibility(View.VISIBLE);
 
             // Show out of space dialog if needed
             if (statusCode == PackageInstaller.STATUS_FAILURE_STORAGE) {

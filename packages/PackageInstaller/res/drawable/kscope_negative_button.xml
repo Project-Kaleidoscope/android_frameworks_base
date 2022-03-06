@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/kscope_negative_button_color_rippled">
+
+    <item
+        android:id="@android:id/mask"
+        android:drawable="@drawable/kscope_negative_button_shape" />
+
+</ripple>
