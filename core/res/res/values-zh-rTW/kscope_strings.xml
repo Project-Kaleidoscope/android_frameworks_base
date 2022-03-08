@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="optimized_charge_notification_channel_label">最佳化充電</string>
+    <string name="optimized_charge_notification_title">暫停充電</string>
+    <string name="optimized_charge_notification_text">由於最佳化充電功能，充電已被暫停</string>
+</resources>
