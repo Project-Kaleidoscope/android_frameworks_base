@@ -9,4 +9,9 @@
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
+    <style name="Kscope.PackageInstaller.Activity.SlideAnimation" parent="android:Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/activity_enter_slide</item>
+        <item name="android:activityOpenExitAnimation">@anim/activity_exit_slide</item>
+    </style>
+
 </resources>

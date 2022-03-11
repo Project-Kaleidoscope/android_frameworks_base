@@ -11,8 +11,8 @@
         <item name="android:windowBackground">@color/kscope_installer_window_background</item>
     </style>
 
-    <style name="Theme.Kscope.PackageInstaller.Main.NoAnim">
-        <item name="android:windowAnimationStyle">@null</item>
+    <style name="Theme.Kscope.PackageInstaller.Main.SlideAnim">
+        <item name="android:windowAnimationStyle">@style/Kscope.PackageInstaller.Activity.SlideAnimation</item>
     </style>
 
 </resources>
