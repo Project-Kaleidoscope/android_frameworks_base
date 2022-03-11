@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="optimized_charge_notification_channel_label">Адаптивная зарядка</string>
+    <string name="optimized_charge_notification_title">Зарядка приостановлена</string>
+    <string name="optimized_charge_notification_text">Адаптивная зарядка приостановлена</string>
+</resources>

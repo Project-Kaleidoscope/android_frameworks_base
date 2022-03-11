@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="status_bar_vpn">虛擬網絡 VPN</string>
+    <string name="quick_settings_caffeine_label">熒幕恆亮</string>
+    <string name="accessibility_quick_settings_caffeine_off">熒幕恆亮關閉</string>
+    <string name="accessibility_quick_settings_caffeine_on">熒幕恆亮開啓</string>
+    <string name="screenshot_delete_label">刪除</string>
+    <string name="screenshot_delete_description">刪除截圖</string>
+</resources>
