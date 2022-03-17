@@ -10355,6 +10355,13 @@ public final class Settings {
         public static final String STATUS_BAR_BATTERY_STYLE = "status_bar_battery_style";
 
         /**
+         * Control whether unlimited spoof is enabled for Google Photos.
+         * @hide
+         */
+        @Readable
+        public static final String GOOGLE_PHOTOS_SPOOF = "google_photos_spoof";
+
+        /**
          * These entries are considered common between the personal and the managed profile,
          * since the managed profile doesn't get to change them.
          */

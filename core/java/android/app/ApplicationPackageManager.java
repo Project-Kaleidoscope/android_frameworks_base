@@ -710,6 +710,11 @@ public class ApplicationPackageManager extends PackageManager {
 
     @Override
     public boolean hasSystemFeature(String name, int version) {
+        if ("com.google.android.apps.photos.NEXUS_PRELOAD".equals(name)
+                && Settings.Secure.getInt(mContext.getContentResolver(),
+                                            Settings.Secure.GOOGLE_PHOTOS_SPOOF, 0) == 1) {
+            return true;
+        }
         return mHasSystemFeatureCache.query(new HasSystemFeatureQuery(name, version));
     }
 
