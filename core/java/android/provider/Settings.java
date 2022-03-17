@@ -16446,6 +16446,12 @@ public final class Settings {
          */
         public static final String TORCH_LONG_PRESS_POWER_TIMEOUT =
                 "torch_long_press_power_timeout";
+
+        /**
+         * Control whether application downgrade is allowed.
+         * @hide
+         */
+        public static final String PM_DOWNGRADE_ALLOWED = "pm_downgrade_allowed";
     }
 
     /**
