@@ -8813,4 +8813,9 @@ public class WindowManagerService extends IWindowManager.Stub
 
         mTaskTransitionSpec = null;
     }
+
+    @Override
+    public void requestSystemScreenshot() {
+        mPolicy.takeFullScreenshot();
+    }
 }

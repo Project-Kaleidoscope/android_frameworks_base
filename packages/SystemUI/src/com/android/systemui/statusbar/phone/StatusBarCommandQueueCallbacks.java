@@ -31,8 +31,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.os.RemoteException;
 import android.os.SystemClock;
 import android.os.UserHandle;
 import android.os.VibrationEffect;
@@ -41,9 +44,11 @@ import android.util.Log;
 import android.util.Slog;
 import android.view.InsetsState.InternalInsetsType;
 import android.view.InsetsVisibilities;
+import android.view.IWindowManager;
 import android.view.KeyEvent;
 import android.view.WindowInsetsController.Appearance;
 import android.view.WindowInsetsController.Behavior;
+import android.view.WindowManagerGlobal;
 
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
@@ -76,6 +81,17 @@ import javax.inject.Inject;
 /** */
 @StatusBarComponent.StatusBarScope
 public class StatusBarCommandQueueCallbacks implements CommandQueue.Callbacks {
+    /* Custom gesture actions */
+    private static final String CUSTOM_GESTURE_ACTION_CAMERA = "camera";
+    private static final String CUSTOM_GESTURE_ACTION_SCREENSHOT = "screenshot";
+    private static final String CUSTOM_GESTURE_ACTION_RINGER_MODE = "ringermode";
+    private static final String CUSTOM_GESTURE_ACTION_EXPLICIT_INTENT = "explicit";
+    private static final String CUSTOM_GESTURE_ACTION_COMMON_SCHEME = "scheme";
+
+    private static final String CUSTOM_GESTURE_ACTION_RINGER_MODE_NORMAL = "normal";
+    private static final String CUSTOM_GESTURE_ACTION_RINGER_MODE_VIBRATE = "vibrate";
+    private static final String CUSTOM_GESTURE_ACTION_RINGER_MODE_SILENT = "silent";
+
     private final StatusBar mStatusBar;
     private final Context mContext;
     private final ShadeController mShadeController;
@@ -104,6 +120,8 @@ public class StatusBarCommandQueueCallbacks implements CommandQueue.Callbacks {
     private final int mDisplayId;
     private final boolean mVibrateOnOpening;
     private final VibrationEffect mCameraLaunchGestureVibrationEffect;
+    private final AudioManager mAudioManager;
+    private final IWindowManager mWindowManagerService;
 
 
     private static final AudioAttributes VIBRATION_ATTRIBUTES = new AudioAttributes.Builder()
@@ -171,6 +189,9 @@ public class StatusBarCommandQueueCallbacks implements CommandQueue.Callbacks {
         mVibrateOnOpening = resources.getBoolean(R.bool.config_vibrateOnIconAnimation);
         mCameraLaunchGestureVibrationEffect = getCameraGestureVibrationEffect(
                 mVibratorOptional, resources);
+
+        mAudioManager = context.getSystemService(AudioManager.class);
+        mWindowManagerService = WindowManagerGlobal.getWindowManagerService();
     }
 
     @Override
@@ -639,5 +660,51 @@ public class StatusBarCommandQueueCallbacks implements CommandQueue.Callbacks {
             timings[i] = pattern[i];
         }
         return VibrationEffect.createWaveform(timings, /* repeat= */ -1);
+    }
+
+    @Override
+    public void onCustomGestureAction(String action) {
+        if (action == null)
+            return;
+
+        String[] resolvedAction = action.split(":", 2);
+        String actionType = resolvedAction[0];
+        String actionParams = null;
+        if (resolvedAction.length == 2)
+            actionParams = resolvedAction[1];
+
+        if (CUSTOM_GESTURE_ACTION_CAMERA.equals(actionType)) {
+            onCameraLaunchGestureDetected(StatusBarManager.CAMERA_LAUNCH_SOURCE_POWER_DOUBLE_TAP);
+        } else if (CUSTOM_GESTURE_ACTION_SCREENSHOT.equals(actionType)) {
+            try {
+                mWindowManagerService.requestSystemScreenshot();
+            } catch (RemoteException e) {}
+        } else if (CUSTOM_GESTURE_ACTION_RINGER_MODE.equals(actionType)) {
+            if (CUSTOM_GESTURE_ACTION_RINGER_MODE_NORMAL.equals(actionParams)) {
+                mAudioManager.setRingerModeInternal(AudioManager.RINGER_MODE_NORMAL);
+                mVibratorHelper.vibrate(VibrationEffect.EFFECT_HEAVY_CLICK);
+            } else if (CUSTOM_GESTURE_ACTION_RINGER_MODE_VIBRATE.equals(actionParams)) {
+                mAudioManager.setRingerModeInternal(AudioManager.RINGER_MODE_VIBRATE);
+                mVibratorHelper.vibrate(VibrationEffect.EFFECT_DOUBLE_CLICK);
+            } else if (CUSTOM_GESTURE_ACTION_RINGER_MODE_SILENT.equals(actionParams)) {
+                mAudioManager.setRingerModeInternal(AudioManager.RINGER_MODE_SILENT);
+            }
+        } else if (CUSTOM_GESTURE_ACTION_EXPLICIT_INTENT.equals(actionType)) {
+            if (actionParams == null)
+                return;
+            String[] component = actionParams.split("/");
+            if (component.length < 2)
+                return;
+            Intent intent = new Intent();
+            intent.setComponent(new ComponentName(component[0], component[1]));
+            mStatusBar.startActivity(intent, true);
+            vibrateForCameraGesture();
+        } else if (CUSTOM_GESTURE_ACTION_COMMON_SCHEME.equals(actionType)) {
+            if (actionParams == null)
+                return;
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(actionParams));
+            mStatusBar.startActivity(intent, true);
+            vibrateForCameraGesture();
+        }
     }
 }

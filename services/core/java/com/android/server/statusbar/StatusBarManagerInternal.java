@@ -176,4 +176,6 @@ public interface StatusBarManagerInternal {
      * @see com.android.internal.statusbar.IStatusBar#setUdfpsHbmListener(IUdfpsHbmListener)
      */
     void setUdfpsHbmListener(IUdfpsHbmListener listener);
+
+    void onCustomGestureAction(String action);
 }

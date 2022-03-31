@@ -149,6 +149,7 @@ public class CommandQueue extends IStatusBar.Stub implements
     private static final int MSG_EMERGENCY_ACTION_LAUNCH_GESTURE      = 58 << MSG_SHIFT;
     private static final int MSG_SET_NAVIGATION_BAR_LUMA_SAMPLING_ENABLED = 59 << MSG_SHIFT;
     private static final int MSG_SET_UDFPS_HBM_LISTENER = 60 << MSG_SHIFT;
+    private static final int MSG_CUSTOM_GESTURE = 61 << MSG_SHIFT;
 
     public static final int FLAG_EXCLUDE_NONE = 0;
     public static final int FLAG_EXCLUDE_SEARCH_PANEL = 1 << 0;
@@ -411,6 +412,8 @@ public class CommandQueue extends IStatusBar.Stub implements
          * @see IStatusBar#setNavigationBarLumaSamplingEnabled(int, boolean)
          */
         default void setNavigationBarLumaSamplingEnabled(int displayId, boolean enable) {}
+
+        default void onCustomGestureAction(String action) { }
     }
 
     public CommandQueue(Context context) {
@@ -1121,6 +1124,14 @@ public class CommandQueue extends IStatusBar.Stub implements
         GcUtils.runGcAndFinalizersSync();
     }
 
+    @Override
+    public void onCustomGestureAction(String action) {
+        synchronized (mLock) {
+            mHandler.removeMessages(MSG_CUSTOM_GESTURE);
+            mHandler.obtainMessage(MSG_CUSTOM_GESTURE, action).sendToTarget();
+        }
+    }
+
     private final class H extends Handler {
         private H(Looper l) {
             super(l);
@@ -1493,6 +1504,11 @@ public class CommandQueue extends IStatusBar.Stub implements
                     for (int i = 0; i < mCallbacks.size(); i++) {
                         mCallbacks.get(i).setNavigationBarLumaSamplingEnabled(msg.arg1,
                                 msg.arg2 != 0);
+                    }
+                    break;
+                case MSG_CUSTOM_GESTURE:
+                    for (int i = 0; i < mCallbacks.size(); i++) {
+                        mCallbacks.get(i).onCustomGestureAction((String) msg.obj);
                     }
                     break;
             }

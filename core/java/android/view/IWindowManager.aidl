@@ -915,4 +915,10 @@ interface IWindowManager
      * reverts to using the default task transition with no spec changes.
      */
     void clearTaskTransitionSpec();
+
+    /**
+     * Triggers system level screenshot action.
+     * This is the same behavior that power + vol down normally does.
+     */
+    void requestSystemScreenshot();
 }
