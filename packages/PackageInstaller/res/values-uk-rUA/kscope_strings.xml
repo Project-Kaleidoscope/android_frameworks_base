@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kscope_install_done">Установка зроблена</string>
+    <string name="kscope_install_failed">Не вийшло встановити</string>
+    <string name="kscope_install">Завантаження</string>
+</resources>

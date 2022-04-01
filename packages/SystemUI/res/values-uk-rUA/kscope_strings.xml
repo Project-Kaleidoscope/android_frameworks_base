@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="status_bar_vpn">ВПН</string>
+    <string name="quick_settings_caffeine_label">Кофеїн</string>
+    <string name="accessibility_quick_settings_caffeine_off">Вимкнути кофеїн.</string>
+    <string name="accessibility_quick_settings_caffeine_on">Увімкнути кофеїн.</string>
+    <string name="screenshot_delete_label">Видалити</string>
+    <string name="screenshot_delete_description">Видалити знімок екрану</string>
+</resources>

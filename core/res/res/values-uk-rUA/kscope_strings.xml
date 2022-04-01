@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="optimized_charge_notification_channel_label">Оптимізований заряд</string>
+    <string name="optimized_charge_notification_title">Заряджання призупинено</string>
+    <string name="optimized_charge_notification_text">Заряджання припинено через оптимізовану політичну зарядку</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kscope_install_done">Instalación completada</string>
+    <string name="kscope_install_failed">Instalación fallida</string>
+    <string name="kscope_install">Instalando</string>
+</resources>
