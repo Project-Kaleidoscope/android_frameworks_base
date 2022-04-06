@@ -84,7 +84,6 @@ class QuickStatusBarHeaderController extends ViewController<QuickStatusBarHeader
     private final String mLocationSlot;
 
     private SysuiColorExtractor mColorExtractor;
-    private ColorExtractor.OnColorsChangedListener mOnColorsChangedListener;
 
     private PrivacyItemController.Callback mPICCallback = new PrivacyItemController.Callback() {
         @Override
@@ -169,11 +168,6 @@ class QuickStatusBarHeaderController extends ViewController<QuickStatusBarHeader
         mIconManager = new StatusBarIconController.TintedIconManager(mIconContainer, featureFlags);
         mDemoModeReceiver = new ClockDemoModeReceiver(mClockView);
         mColorExtractor = colorExtractor;
-        mOnColorsChangedListener = (extractor, which) -> {
-            final boolean lightTheme = mColorExtractor.getNeutralColors().supportsDarkText();
-            mClockView.onColorsChanged(lightTheme);
-        };
-        mColorExtractor.addOnColorsChangedListener(mOnColorsChangedListener);
 
         mCameraSlot = getResources().getString(com.android.internal.R.string.status_bar_camera);
         mMicSlot = getResources().getString(com.android.internal.R.string.status_bar_microphone);
@@ -223,7 +217,6 @@ class QuickStatusBarHeaderController extends ViewController<QuickStatusBarHeader
 
     @Override
     protected void onViewDetached() {
-        mColorExtractor.removeOnColorsChangedListener(mOnColorsChangedListener);
         mPrivacyChip.setOnClickListener(null);
         mStatusBarIconController.removeIconGroup(mIconManager);
         mQSCarrierGroupController.setOnSingleCarrierChangedListener(null);
