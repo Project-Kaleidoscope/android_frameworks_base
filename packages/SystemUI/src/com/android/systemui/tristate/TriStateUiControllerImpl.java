@@ -45,6 +45,7 @@ import android.view.WindowManager.LayoutParams;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.internal.policy.SystemBarUtils;
 import com.android.systemui.Dependency;
 import com.android.systemui.R;
 import com.android.systemui.tristate.TriStateUiController;
@@ -302,8 +303,7 @@ public class TriStateUiControllerImpl implements ConfigurationListener, TriState
                         positionY2 = res.getDimensionPixelSize(
                             R.dimen.tri_state_up_dialog_position_deep_land);
                         if (isTsKeyRight) {
-                            positionY2 += res.getDimensionPixelSize(
-                                com.android.internal.R.dimen.status_bar_height);
+                            positionY2 += SystemBarUtils.getStatusBarHeight(mContext);
                         }
                         if (mTriStateMode == MODE_SILENT) {
                             positionX = res.getDimensionPixelSize(
@@ -325,8 +325,7 @@ public class TriStateUiControllerImpl implements ConfigurationListener, TriState
                         }
                         positionX = res.getDimensionPixelSize(
                             R.dimen.tri_state_up_dialog_position_deep);
-                        positionY2 = res.getDimensionPixelSize(
-                            com.android.internal.R.dimen.status_bar_height);
+                        positionY2 = SystemBarUtils.getStatusBarHeight(mContext);
                         bg = R.drawable.dialog_tri_state_middle_bg;
                         if (mTriStateMode != MODE_SILENT) {
                             if (mTriStateMode != MODE_VIBRATE) {
@@ -351,8 +350,7 @@ public class TriStateUiControllerImpl implements ConfigurationListener, TriState
                         positionY2 = res.getDimensionPixelSize(
                                         R.dimen.tri_state_up_dialog_position_deep_land);
                         if (!isTsKeyRight) {
-                            positionY2 += res.getDimensionPixelSize(
-                                            com.android.internal.R.dimen.status_bar_height);
+                            positionY2 += SystemBarUtils.getStatusBarHeight(mContext);
                         }
                         if (mTriStateMode == MODE_SILENT) {
                             positionX = res.getDimensionPixelSize(
@@ -379,23 +377,20 @@ public class TriStateUiControllerImpl implements ConfigurationListener, TriState
                                 if (mTriStateMode == MODE_NORMAL) {
                                     positionY2 = res.getDimensionPixelSize(
                                         R.dimen.tri_state_down_dialog_position)
-                                        + res.getDimensionPixelSize(
-                                            com.android.internal.R.dimen.status_bar_height);
+                                        + SystemBarUtils.getStatusBarHeight(mContext);
                                     bg = R.drawable.dialog_tri_state_down_bg;
                                     break;
                                 }
                             }
                             positionY2 = res.getDimensionPixelSize(
                                 R.dimen.tri_state_middle_dialog_position)
-                                + res.getDimensionPixelSize(
-                                    com.android.internal.R.dimen.status_bar_height);
+                                + SystemBarUtils.getStatusBarHeight(mContext);
                             bg = R.drawable.dialog_tri_state_middle_bg;
                             break;
                         }
                         positionY2 = res.getDimensionPixelSize(
                             R.dimen.tri_state_up_dialog_position)
-                            + res.getDimensionPixelSize(
-                                com.android.internal.R.dimen.status_bar_height);
+                            + SystemBarUtils.getStatusBarHeight(mContext);
                         bg = R.drawable.dialog_tri_state_up_bg;
                         break;
                 }
