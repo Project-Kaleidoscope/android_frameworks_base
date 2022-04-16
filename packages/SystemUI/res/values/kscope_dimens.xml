@@ -5,6 +5,7 @@
     <dimen name="status_bar_battery_icon_circle_width">14.5dp</dimen>
 
     <!-- Volume panel -->
+    <dimen name="volume_tool_tip_left_margin">76dp</dimen>
     <dimen name="volume_dialog_panel_transparent_padding_left">8dp</dimen>
 
     <!-- Alert Slider -->
