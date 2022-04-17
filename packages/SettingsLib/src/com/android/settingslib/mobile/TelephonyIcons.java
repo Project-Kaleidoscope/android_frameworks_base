@@ -30,20 +30,21 @@ public class TelephonyIcons {
     //***** Data connection icons
     public static final int FLIGHT_MODE_ICON = R.drawable.stat_sys_airplane_mode;
 
-    public static final int ICON_LTE = R.drawable.ic_lte_mobiledata;
-    public static final int ICON_LTE_PLUS = R.drawable.ic_lte_plus_mobiledata;
-    public static final int ICON_G = R.drawable.ic_g_mobiledata;
-    public static final int ICON_E = R.drawable.ic_e_mobiledata;
-    public static final int ICON_H = R.drawable.ic_h_mobiledata;
-    public static final int ICON_H_PLUS = R.drawable.ic_h_plus_mobiledata;
-    public static final int ICON_3G = R.drawable.ic_3g_mobiledata;
-    public static final int ICON_4G = R.drawable.ic_4g_mobiledata;
-    public static final int ICON_4G_PLUS = R.drawable.ic_4g_plus_mobiledata;
-    public static final int ICON_5G_E = R.drawable.ic_5g_e_mobiledata;
-    public static final int ICON_1X = R.drawable.ic_1x_mobiledata;
-    public static final int ICON_5G = R.drawable.ic_5g_mobiledata;
-    public static final int ICON_5G_PLUS = R.drawable.ic_5g_plus_mobiledata;
-    public static final int ICON_CWF = R.drawable.ic_carrier_wifi;
+    public static final int ICON_LTE = R.drawable.kscope_ic_lte_mobiledata;
+    public static final int ICON_LTE_PLUS = R.drawable.kscope_ic_lte_plus_mobiledata;
+    public static final int ICON_G = R.drawable.kscope_ic_g_mobiledata;
+    public static final int ICON_E = R.drawable.kscope_ic_e_mobiledata;
+    public static final int ICON_H = R.drawable.kscope_ic_h_mobiledata;
+    public static final int ICON_H_PLUS = R.drawable.kscope_ic_h_plus_mobiledata;
+    public static final int ICON_3G = R.drawable.kscope_ic_3g_mobiledata;
+    public static final int ICON_4G = R.drawable.kscope_ic_4g_mobiledata;
+    public static final int ICON_4G_PLUS = R.drawable.kscope_ic_4g_plus_mobiledata;
+    public static final int ICON_5G_E = R.drawable.kscope_ic_5g_e_mobiledata;
+    public static final int ICON_1X = R.drawable.kscope_ic_1x_mobiledata;
+    public static final int ICON_5G = R.drawable.kscope_ic_5g_mobiledata;
+    public static final int ICON_5G_PLUS = R.drawable.kscope_ic_5g_plus_mobiledata;
+    public static final int ICON_CWF = R.drawable.kscope_ic_carrier_wifi;
+    public static final int ICON_5G_NSA = R.drawable.kscope_ic_5g_nsa_mobiledata;
 
     public static final MobileIconGroup CARRIER_NETWORK_CHANGE = new MobileIconGroup(
             "CARRIER_NETWORK_CHANGE",

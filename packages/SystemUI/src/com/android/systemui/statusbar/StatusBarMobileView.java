@@ -112,11 +112,7 @@ public class StatusBarMobileView extends FrameLayout implements DarkReceiver,
         mMobileGroup = findViewById(R.id.mobile_group);
         mMobile = findViewById(R.id.mobile_signal);
         mMobileType = findViewById(R.id.mobile_type);
-        if (mProviderModel) {
-            mMobileRoaming = findViewById(R.id.mobile_roaming_large);
-        } else {
-            mMobileRoaming = findViewById(R.id.mobile_roaming);
-        }
+        mMobileRoaming = findViewById(R.id.mobile_roaming_large);
         mMobileRoamingSpace = findViewById(R.id.mobile_roaming_space);
         mIn = findViewById(R.id.mobile_in);
         mOut = findViewById(R.id.mobile_out);

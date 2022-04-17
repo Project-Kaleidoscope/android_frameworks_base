@@ -1,0 +1,30 @@
+<!--
+  Copyright (C) 2022 Project Kaleidoscope
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="@dimen/mobiledata_type_size"
+    android:height="@dimen/mobiledata_type_size"
+    android:viewportWidth="1559"
+    android:viewportHeight="1559">
+  <group>
+    <clip-path
+        android:pathData="M0,0h1559v1559h-1559z"/>
+    <path
+        android:pathData="M283.96,155C300.08,155 314.89,156.66 328.39,159.98 341.9,163.3 354.22,167.69 365.36,173.15 376.49,178.61 386.44,184.77 395.21,191.66 403.98,198.54 411.68,205.54 418.31,212.65L385.61,251.09C373.77,238.75 360.02,228.31 344.39,219.77 328.75,211.23 309.08,206.96 285.39,206.96 261.69,206.96 240.37,211.35 221.41,220.13 202.45,228.9 186.34,241.48 173.07,257.85 159.8,274.22 149.5,294.03 142.15,317.28 134.8,340.53 131.13,366.63 131.13,395.58 131.13,425 134.57,451.45 141.44,474.94 148.31,498.43 158.26,518.47 171.29,535.08 184.33,551.69 200.44,564.5 219.63,573.52 238.82,582.53 260.98,587.04 286.1,587.04 302.68,587.04 318.44,584.55 333.37,579.57 348.3,574.59 360.5,567.82 369.98,559.28L369.98,437.57 271.17,437.57 271.17,388.46 424,388.46 424,584.91C408.83,600.57 388.93,613.49 364.29,623.7 339.65,633.9 311.69,639 280.41,639 249.61,639 221.29,633.54 195.46,622.63 169.64,611.72 147.48,595.94 129,575.3 110.52,554.66 96.06,529.27 85.64,499.14 75.21,469.01 70,434.96 70,397 70,359.51 75.33,325.82 85.99,295.93 96.66,266.04 111.47,240.65 130.42,219.77 149.38,198.89 172.01,182.88 198.31,171.73 224.61,160.57 253.16,155 283.96,155Z"
+        android:fillColor="#5F6368"
+        android:fillType="evenOdd"/>
+  </group>
+</vector>

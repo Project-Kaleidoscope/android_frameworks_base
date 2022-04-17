@@ -1,0 +1,34 @@
+<!--
+  Copyright (C) 2022 Project Kaleidoscope
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="@dimen/mobiledata_type_size"
+    android:height="@dimen/mobiledata_type_size"
+    android:viewportWidth="1559"
+    android:viewportHeight="1559">
+  <group>
+    <clip-path
+        android:pathData="M0,0h1559v1559h-1559z"/>
+    <path
+        android:pathData="M586.15,160 L615.85,160 615.85,249.3 699,249.3 699,277.7 615.85,277.7 615.85,367 586.15,367 586.15,277.7 503,277.7 503,249.3 586.15,249.3 586.15,160Z"
+        android:fillColor="#5F6368"
+        android:fillType="evenOdd"/>
+    <path
+        android:pathData="M97,164 L156.09,164 156.09,359.35 373.2,359.35 373.2,164 433,164 433,630 373.2,630 373.2,410.5 156.09,410.5 156.09,630 97,630 97,164Z"
+        android:fillColor="#5F6368"
+        android:fillType="evenOdd"/>
+  </group>
+</vector>
