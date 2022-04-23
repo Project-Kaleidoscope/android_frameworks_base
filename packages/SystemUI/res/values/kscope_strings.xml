@@ -20,4 +20,7 @@
     <!-- Face Unlock -->
     <string name="face_unlock_recognizing">Recognizing face...</string>
 
+    <!-- 5G toggle in internet dialog -->
+    <string name="enable_fiveg">Enable 5G</string>
+
 </resources>
