@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="optimized_charge_notification_channel_label">充电优化</string>
+    <string name="optimized_charge_notification_title">充电已暂停</string>
+    <string name="optimized_charge_notification_text">因充电优化策略，充电已暂停</string>
+    <string name="face_unlock_disabled_idle">面部解锁因不活动而被禁用</string>
+</resources>
