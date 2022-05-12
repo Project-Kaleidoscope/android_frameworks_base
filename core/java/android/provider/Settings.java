@@ -10423,6 +10423,12 @@ public final class Settings {
         public static final String VOL_UP_DOWN_ACTION = "vol_up_down_action";
 
         /**
+         * Control whether privacy indicator should be hidden.
+         * @hide
+         */
+        public static final String HIDE_PRIVACY_INDICATOR = "hide_privacy_indicator";
+
+        /**
          * These entries are considered common between the personal and the managed profile,
          * since the managed profile doesn't get to change them.
          */
