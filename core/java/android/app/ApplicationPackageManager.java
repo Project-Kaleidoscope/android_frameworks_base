@@ -714,6 +714,11 @@ public class ApplicationPackageManager extends PackageManager {
                 && Settings.Secure.getInt(mContext.getContentResolver(),
                                             Settings.Secure.GOOGLE_PHOTOS_SPOOF, 0) == 1) {
             return true;
+        } else if (("com.google.android.apps.photos.PIXEL_2017_PRELOAD".equals(name)
+                || "com.google.android.apps.photos.PIXEL_2018_PRELOAD".equals(name))
+                && Settings.Secure.getInt(mContext.getContentResolver(),
+                                            Settings.Secure.GOOGLE_PHOTOS_SPOOF, 0) == 1) {
+            return false;
         }
         return mHasSystemFeatureCache.query(new HasSystemFeatureQuery(name, version));
     }
