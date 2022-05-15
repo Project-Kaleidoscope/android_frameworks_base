@@ -278,7 +278,7 @@ public class NavigationBarInflaterView extends FrameLayout
                 if (mIsKeyboardNavigationDisabled)
                     iom.setHighestPriority(OVERLAY_KEYBOARD_HIDE_NAVIGATION, userId);
             }
-        } catch (RemoteException e) {
+        } catch (IllegalArgumentException | RemoteException e) {
             Log.e(TAG, "Failed to " + (state ? "enable" : "disable")
                     + " overlay " + OVERLAY_NAVIGATION_HIDE_HINT + " for user " + userId);
         }
