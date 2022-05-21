@@ -29,4 +29,7 @@
 
     <!-- Allow devices override audio panel location to the left side -->
     <bool name="config_audioPanelOnLeftSide">false</bool>
+
+    <!-- Allow some apps not show from location indicators -->
+    <string-array name="config_locationIndicatorWhitelist" translatable="false"></string-array>
 </resources>

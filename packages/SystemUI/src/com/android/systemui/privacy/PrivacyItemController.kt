@@ -26,6 +26,7 @@ import android.provider.DeviceConfig
 import com.android.internal.annotations.VisibleForTesting
 import com.android.internal.config.sysui.SystemUiDeviceConfigFlags
 import com.android.systemui.Dumpable
+import com.android.systemui.R
 import com.android.systemui.appops.AppOpItem
 import com.android.systemui.appops.AppOpsController
 import com.android.systemui.dagger.SysUISingleton
@@ -46,6 +47,7 @@ import javax.inject.Inject
 @SysUISingleton
 class PrivacyItemController @Inject constructor(
     private val appOpsController: AppOpsController,
+    private val context: Context,
     @Main uiExecutor: DelayableExecutor,
     @Background private val bgExecutor: DelayableExecutor,
     private val deviceConfigProxy: DeviceConfigProxy,
@@ -57,12 +59,6 @@ class PrivacyItemController @Inject constructor(
 
     @VisibleForTesting
     internal companion object {
-        val LOCATION_WHITELIST_PKG = arrayOf(
-            "com.android.bluetooth",
-            "com.android.networkstack.tethering",
-            "com.android.phone",
-            "com.android.systemui",
-        )
         val CAMERA_WHITELIST_PKG = arrayOf(
             "org.pixelexperience.faceunlock",
         )
@@ -122,6 +118,9 @@ class PrivacyItemController @Inject constructor(
         private set
     var locationAvailable = isLocationEnabled()
 
+    var mLocationWhitelists = context.getResources().getStringArray(
+        R.array.config_locationIndicatorWhitelist)
+
     var allIndicatorsAvailable = micCameraAvailable && locationAvailable
 
     private val devicePropertiesChangedListener =
@@ -157,7 +156,7 @@ class PrivacyItemController @Inject constructor(
         ) {
             // Check if we care about this code right now
             if (code in OPS_LOCATION && !locationAvailable
-                    || packageName in LOCATION_WHITELIST_PKG) {
+                    || packageName in mLocationWhitelists) {
                 return
             }
             if (code in OPS_MIC_CAMERA && !micCameraAvailable
@@ -334,7 +333,7 @@ class PrivacyItemController @Inject constructor(
             else -> return null
         }
         if (type == PrivacyType.TYPE_LOCATION && !locationAvailable
-                || appOpItem.packageName in LOCATION_WHITELIST_PKG) {
+                || appOpItem.packageName in mLocationWhitelists) {
             return null
         }
         if (type == PrivacyType.TYPE_CAMERA && !micCameraAvailable
