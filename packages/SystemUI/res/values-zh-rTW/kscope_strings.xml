@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="status_bar_vpn">VPN</string>
+    <string name="clock">時鐘</string>
+    <string name="quick_settings_caffeine_label">保持螢幕顯示</string>
+    <string name="accessibility_quick_settings_caffeine_off">保持螢幕顯示功能關閉</string>
+    <string name="accessibility_quick_settings_caffeine_on">保持螢幕顯示功能開啟</string>
+    <string name="screenshot_delete_label">刪除</string>
+    <string name="screenshot_delete_description">刪除截圖</string>
+    <string name="face_unlock_recognizing">正在識別臉部...</string>
+    <string name="enable_fiveg">開啟 5G</string>
+</resources>
