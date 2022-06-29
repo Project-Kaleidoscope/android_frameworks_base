@@ -25,7 +25,7 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
 
     protected int mColumns;
     protected int mCellWidth;
-    protected int mCellHeightResId = R.dimen.qs_tile_height;
+    protected int mCellHeightResId = R.dimen.kscope_qs_tile_height;
     protected int mCellHeight;
     protected int mMaxCellHeight;
     protected int mCellMarginHorizontal;

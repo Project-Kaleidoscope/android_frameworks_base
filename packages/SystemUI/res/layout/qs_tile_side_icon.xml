@@ -29,14 +29,4 @@
         android:scaleType="fitCenter"
         android:visibility="gone"
     />
-
-    <ImageView
-        android:id="@+id/chevron"
-        android:layout_width="@dimen/qs_icon_size"
-        android:layout_height="@dimen/qs_icon_size"
-        android:src="@*android:drawable/ic_chevron_end"
-        android:autoMirrored="true"
-        android:visibility="gone"
-        android:importantForAccessibility="no"
-    />
 </FrameLayout>
