@@ -3,8 +3,8 @@
     <string name="status_bar_vpn">VPN</string>
     <string name="clock">时钟</string>
     <string name="quick_settings_caffeine_label">保持亮屏</string>
-    <string name="accessibility_quick_settings_caffeine_off">保持亮屏关闭。</string>
-    <string name="accessibility_quick_settings_caffeine_on">保持亮屏开启。</string>
+    <string name="accessibility_quick_settings_caffeine_off">保持亮屏关闭</string>
+    <string name="accessibility_quick_settings_caffeine_on">保持亮屏开启</string>
     <string name="screenshot_delete_label">删除</string>
     <string name="screenshot_delete_description">删除截图</string>
     <string name="face_unlock_recognizing">正在识别面部...</string>
