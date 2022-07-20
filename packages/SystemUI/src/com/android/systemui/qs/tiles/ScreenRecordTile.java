@@ -116,18 +116,7 @@ public class ScreenRecordTile extends QSTileImpl<QSTile.BooleanState>
         // Show expand icon when clicking will open a dialog
         state.forceExpandIcon = state.state == Tile.STATE_INACTIVE;
 
-        if (isRecording) {
-            state.secondaryLabel = mContext.getString(R.string.quick_settings_screen_record_stop);
-        } else if (isStarting) {
-            // round, since the timer isn't exact
-            int countdown = (int) Math.floorDiv(mMillisUntilFinished + 500, 1000);
-            state.secondaryLabel = String.format("%d...", countdown);
-        } else {
-            state.secondaryLabel = mContext.getString(R.string.quick_settings_screen_record_start);
-        }
-        state.contentDescription = TextUtils.isEmpty(state.secondaryLabel)
-                ? state.label
-                : TextUtils.concat(state.label, ", ", state.secondaryLabel);
+        state.contentDescription = state.label;
         state.expandedAccessibilityClassName = Switch.class.getName();
     }
 

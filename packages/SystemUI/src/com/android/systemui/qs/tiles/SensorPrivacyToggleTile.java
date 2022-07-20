@@ -115,11 +115,6 @@ public abstract class SensorPrivacyToggleTile extends QSTileImpl<QSTile.BooleanS
         state.state = isBlocked ? Tile.STATE_INACTIVE : Tile.STATE_ACTIVE;
         state.value = !isBlocked;
         state.label = getTileLabel();
-        if (isBlocked) {
-            state.secondaryLabel = mContext.getString(R.string.quick_settings_camera_mic_blocked);
-        } else {
-            state.secondaryLabel = mContext.getString(R.string.quick_settings_camera_mic_available);
-        }
         state.contentDescription = state.label;
         state.expandedAccessibilityClassName = Switch.class.getName();
     }

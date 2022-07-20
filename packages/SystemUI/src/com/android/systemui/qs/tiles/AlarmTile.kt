@@ -88,27 +88,15 @@ class AlarmTile @Inject constructor(
         state.icon = icon
         state.label = tileLabel
         lastAlarmInfo?.let {
-            state.secondaryLabel = formatNextAlarm(it)
             state.state = Tile.STATE_ACTIVE
         } ?: run {
-            state.secondaryLabel = mContext.getString(R.string.qs_alarm_tile_no_alarm)
             state.state = Tile.STATE_INACTIVE
         }
-        state.contentDescription = TextUtils.concat(state.label, ", ", state.secondaryLabel)
+        state.contentDescription = state.label
     }
 
     override fun getTileLabel(): CharSequence {
         return mContext.getString(R.string.status_bar_alarm)
-    }
-
-    private fun formatNextAlarm(info: AlarmClockInfo): String {
-        val skeleton = if (use24HourFormat()) "EHm" else "Ehma"
-        val pattern = DateFormat.getBestDateTimePattern(Locale.getDefault(), skeleton)
-        return DateFormat.format(pattern, info.triggerTime).toString()
-    }
-
-    private fun use24HourFormat(): Boolean {
-        return DateFormat.is24HourFormat(mContext, userTracker.userId)
     }
 
     override fun getMetricsCategory(): Int {
