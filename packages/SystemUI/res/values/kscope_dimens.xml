@@ -38,7 +38,7 @@
     <!-- QS tile -->
     <dimen name="kscope_qs_tile_text_size">11sp</dimen>
     <dimen name="kscope_qs_tile_secondary_text_size">9sp</dimen>
-    <dimen name="kscope_qs_tile_icon_background_size">48dp</dimen>
+    <dimen name="kscope_qs_tile_icon_background_size">56dp</dimen>
     <dimen name="kscope_qs_tile_icon_padding">2dp</dimen>
     <dimen name="kscope_qs_tile_label_padding_top">7dp</dimen>
     <dimen name="kscope_qs_tile_height">92dp</dimen>
