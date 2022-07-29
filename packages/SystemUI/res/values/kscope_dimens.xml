@@ -55,4 +55,7 @@
     <dimen name="kscope_qs_tile_chevron_width">10dp</dimen>
     <dimen name="kscope_qs_tile_chevron_height">12dp</dimen>
 
+    <!-- Lyric -->
+    <dimen name="lyric_icon_margin_end">4dp</dimen>
+    <dimen name="lyric_padding_end">4dp</dimen>
 </resources>

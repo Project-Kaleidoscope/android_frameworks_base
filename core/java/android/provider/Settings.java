@@ -10562,6 +10562,17 @@ public final class Settings {
          */
         public static final String KEYBOARD_NO_NAVIGATION_BAR = "keyboard_no_navigation_bar";
 
+        /**
+         * Show lyric in status bar when playing music
+         * <ul>
+         *    <li> 0 = disabled </li>
+         *    <li> 1 = enabled </li>
+         * </ul>
+         *
+         * @hide
+         */
+        public static final String STATUS_BAR_SHOW_LYRIC = "status_bar_show_lyric";
+
     }
 
     /**
