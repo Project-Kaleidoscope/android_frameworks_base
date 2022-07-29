@@ -17,6 +17,7 @@
 package com.android.systemui.qs;
 
 import static com.android.systemui.media.dagger.MediaModule.QUICK_QS_PANEL;
+import static com.android.systemui.qs.QuickQSPanel.QS_SHOW_BRIGHTNESS;
 import static com.android.systemui.qs.dagger.QSFragmentModule.QQS_FOOTER;
 import static com.android.systemui.qs.dagger.QSFragmentModule.QS_USING_MEDIA_PLAYER;
 
@@ -30,6 +31,11 @@ import com.android.systemui.plugins.qs.QSTile;
 import com.android.systemui.qs.customize.QSCustomizerController;
 import com.android.systemui.qs.dagger.QSScope;
 import com.android.systemui.qs.logging.QSLogger;
+import com.android.systemui.settings.brightness.BrightnessController;
+import com.android.systemui.settings.brightness.BrightnessMirrorHandler;
+import com.android.systemui.settings.brightness.BrightnessSliderController;
+import com.android.systemui.statusbar.policy.BrightnessMirrorController;
+import com.android.systemui.tuner.TunerService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +46,12 @@ import javax.inject.Named;
 /** Controller for {@link QuickQSPanel}. */
 @QSScope
 public class QuickQSPanelController extends QSPanelControllerBase<QuickQSPanel> {
+
+    private final BrightnessController mBrightnessController;
+    private final BrightnessSliderController mBrightnessSliderController;
+    private final BrightnessMirrorHandler mBrightnessMirrorHandler;
+    private final TunerService mTunerService;
+    private BrightnessMirrorController mBrightnessMirrorController;
 
     private final QSPanel.OnConfigurationChangedListener mOnConfigurationChangedListener =
             newConfig -> {
@@ -58,11 +70,20 @@ public class QuickQSPanelController extends QSPanelControllerBase<QuickQSPanel> 
             @Named(QUICK_QS_PANEL) MediaHost mediaHost,
             MetricsLogger metricsLogger, UiEventLogger uiEventLogger, QSLogger qsLogger,
             DumpManager dumpManager,
-            @Named(QQS_FOOTER) FooterActionsController footerActionsController
+            @Named(QQS_FOOTER) FooterActionsController footerActionsController,
+            TunerService tunerService,
+            BrightnessController.Factory brightnessControllerFactory,
+            BrightnessSliderController.Factory brightnessSliderFactory
     ) {
         super(view, qsTileHost, qsCustomizerController, usingMediaPlayer, mediaHost, metricsLogger,
                 uiEventLogger, qsLogger, dumpManager);
+        mTunerService = tunerService;
         mFooterActionsController = footerActionsController;
+        mBrightnessSliderController = brightnessSliderFactory.create(getContext(), mView);
+        mView.setBrightnessView(mBrightnessSliderController.getRootView());
+        mBrightnessController = brightnessControllerFactory.create(
+                mBrightnessSliderController.getIconView(), mBrightnessSliderController);
+        mBrightnessMirrorHandler = new BrightnessMirrorHandler(mBrightnessController);
     }
 
     @Override
@@ -73,24 +94,43 @@ public class QuickQSPanelController extends QSPanelControllerBase<QuickQSPanel> 
         mMediaHost.init(MediaHierarchyManager.LOCATION_QQS);
         mFooterActionsController.init();
         mFooterActionsController.refreshVisibility(mShouldUseSplitNotificationShade);
+        mBrightnessSliderController.init();
     }
 
     @Override
     protected void onViewAttached() {
         super.onViewAttached();
+        mTunerService.addTunable(mView, QS_SHOW_BRIGHTNESS);
+        mView.updateResources();
+        if (mView.isListening()) {
+            refreshAllTiles();
+        }
         mView.addOnConfigurationChangedListener(mOnConfigurationChangedListener);
+        mBrightnessMirrorHandler.onQsPanelAttached();
     }
 
     @Override
     protected void onViewDetached() {
         super.onViewDetached();
+        mTunerService.removeTunable(mView);
         mView.removeOnConfigurationChangedListener(mOnConfigurationChangedListener);
+        mBrightnessMirrorHandler.onQsPanelDettached();
     }
 
     @Override
     void setListening(boolean listening) {
         super.setListening(listening);
         mFooterActionsController.setListening(listening);
+        mBrightnessController.registerCallbacks();
+    }
+
+    public void setBrightnessMirror(BrightnessMirrorController brightnessMirrorController) {
+        mBrightnessMirrorHandler.setController(brightnessMirrorController);
+    }
+
+    public void refreshAllTiles() {
+        mBrightnessController.checkRestrictionAndSetEnabled();
+        super.refreshAllTiles();
     }
 
     public boolean isListening() {

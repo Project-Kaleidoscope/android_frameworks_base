@@ -67,6 +67,13 @@
                 android:layout_marginStart="@dimen/qs_footer_margin"
                 android:layout_marginEnd="@dimen/qs_footer_margin"
                 />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/qqs_footer_actions"
+                android:layout_marginTop="@dimen/kscope_qqs_brightness_margin_top"
+                android:id="@+id/qs_brightness_dialog"/>
         </com.android.systemui.qs.QuickQSPanel>
     </RelativeLayout>
 
