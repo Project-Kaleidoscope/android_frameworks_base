@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- QS Footer -->
+    <dimen name="kscope_qs_footer_height">134dp</dimen>
+
+</resources>

@@ -158,8 +158,10 @@ public class QSPanel extends LinearLayout implements Tunable {
             removeView(mBrightnessView);
             mMovableContentStartIndex--;
         }
-        addView(view, 0);
         mBrightnessView = view;
+
+        ViewGroup mBrightnessViewContainer = findViewById(R.id.qs_brightness_dialog);
+        mBrightnessViewContainer.addView(view);
 
         setBrightnessViewMargin();
 
