@@ -2247,11 +2247,6 @@ public class StatusBar extends SystemUI implements
         mNoAnimationOnNextBarModeChange = false;
     }
 
-    // Called by NavigationBarFragment
-    public void setQsScrimEnabled(boolean scrimEnabled) {
-        mNotificationPanelViewController.setQsScrimEnabled(scrimEnabled);
-    }
-
     /** Temporarily hides Bubbles if the status bar is hidden. */
     void updateBubblesVisibility() {
         mBubblesOptional.ifPresent(bubbles -> bubbles.onStatusBarVisibilityChanged(

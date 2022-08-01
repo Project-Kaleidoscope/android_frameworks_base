@@ -409,7 +409,6 @@ public class NotificationPanelViewController extends PanelViewController {
     private boolean mOnlyAffordanceInThisMotion;
     private ValueAnimator mQsSizeChangeAnimator;
 
-    private boolean mQsScrimEnabled = true;
     private boolean mQsTouchAboveFalsingThreshold;
     private int mQsFalsingThreshold;
 
@@ -2488,13 +2487,6 @@ public class NotificationPanelViewController extends PanelViewController {
         }
         mKeyguardStatusViewController.setClipBounds(
                 clipStatusView ? mKeyguardStatusAreaClipBounds : null);
-        if (!qsVisible && mShouldUseSplitNotificationShade) {
-            // On the lockscreen when qs isn't visible, we don't want the bounds of the shade to
-            // be visible, otherwise you can see the bounds once swiping up to see bouncer
-            mScrimController.setNotificationsBounds(0, 0, 0, 0);
-        } else {
-            mScrimController.setNotificationsBounds(left, top, right, bottom);
-        }
 
         if (mShouldUseSplitNotificationShade) {
             mKeyguardStatusBarViewController.setNoTopClipping();
@@ -2502,7 +2494,6 @@ public class NotificationPanelViewController extends PanelViewController {
             mKeyguardStatusBarViewController.updateTopClipping(top);
         }
 
-        mScrimController.setScrimCornerRadius(radius);
         int nsslLeft = left - mNotificationStackScrollLayoutController.getLeft();
         int nsslRight = right - mNotificationStackScrollLayoutController.getLeft();
         int nsslTop = top - mNotificationStackScrollLayoutController.getTop();
@@ -3274,14 +3265,6 @@ public class NotificationPanelViewController extends PanelViewController {
     @Override
     public boolean isDozing() {
         return mDozing;
-    }
-
-    public void setQsScrimEnabled(boolean qsScrimEnabled) {
-        boolean changed = mQsScrimEnabled != qsScrimEnabled;
-        mQsScrimEnabled = qsScrimEnabled;
-        if (changed) {
-            updateQsState();
-        }
     }
 
     public void onScreenTurningOn() {
