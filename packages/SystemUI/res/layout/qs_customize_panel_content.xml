@@ -28,14 +28,12 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:paddingStart="@dimen/qs_customize_internal_side_paddings"
-        android:paddingEnd="@dimen/qs_customize_internal_side_paddings"
         android:background="@drawable/qs_customizer_background">
         <Toolbar
             android:id="@*android:id/action_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/qs_customizer_toolbar"
+            android:layout_marginHorizontal="@dimen/qs_customize_internal_side_paddings"
             android:navigationContentDescription="@*android:string/action_bar_up_description"
             style="@style/QSCustomizeToolbar"
             />
@@ -45,9 +43,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:paddingStart="@dimen/qs_customize_internal_side_paddings"
-            android:paddingEnd="@dimen/qs_customize_internal_side_paddings"
-            android:paddingBottom="28dp"
+            android:paddingHorizontal="@dimen/kscope_qs_customize_side_paddings"
+            android:paddingBottom="@dimen/navigation_bar_size"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:scrollIndicators="top"
@@ -56,10 +53,4 @@
             android:importantForAccessibility="auto" />
     </com.android.keyguard.AlphaOptimizedLinearLayout>
 
-    <View
-        android:id="@+id/nav_bar_background"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/navigation_bar_size"
-        android:layout_gravity="bottom"
-        android:background="#ff000000" />
 </merge>

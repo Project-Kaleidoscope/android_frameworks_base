@@ -90,7 +90,6 @@ public class QSCustomizerController extends ViewController<QSCustomizer> {
     private final ConfigurationListener mConfigurationListener = new ConfigurationListener() {
         @Override
         public void onConfigChanged(Configuration newConfig) {
-            mView.updateNavBackDrop(newConfig, mLightBarController);
             mView.updateResources();
             if (mTileAdapter.updateNumColumns()) {
                 RecyclerView.LayoutManager lm = mView.getRecyclerView().getLayoutManager();
@@ -122,8 +121,6 @@ public class QSCustomizerController extends ViewController<QSCustomizer> {
 
     @Override
     protected void onViewAttached() {
-        mView.updateNavBackDrop(getResources().getConfiguration(), mLightBarController);
-
         mConfigurationController.addCallback(mConfigurationListener);
 
         mTileQueryHelper.setListener(mTileAdapter);
@@ -193,7 +190,6 @@ public class QSCustomizerController extends ViewController<QSCustomizer> {
             }
             mTileQueryHelper.queryTiles(mQsTileHost);
             mKeyguardStateController.addCallback(mKeyguardCallback);
-            mView.updateNavColors(mLightBarController);
         }
     }
 
@@ -250,7 +246,6 @@ public class QSCustomizerController extends ViewController<QSCustomizer> {
             mView.setCustomizing(false);
             save();
             mView.hide(animate);
-            mView.updateNavColors(mLightBarController);
             mKeyguardStateController.removeCallback(mKeyguardCallback);
         }
     }
