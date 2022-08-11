@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kscope_install_done">Yükleme tamamlandı</string>
+    <string name="kscope_install_failed">Yükleme başarısız oldu</string>
+    <string name="kscope_install">Yükleniyor</string>
+</resources>

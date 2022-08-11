@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="optimized_charge_notification_channel_label">Optimize şarj</string>
+    <string name="optimized_charge_notification_title">Şarj askıya alındı</string>
+    <string name="optimized_charge_notification_text">Şarj optimizasyonu nedeniyle şarj askıya alındı</string>
+    <string name="face_unlock_disabled_idle">Hareketsizlik nedeniyle yüz kilidi devre dışı bırakıldı</string>
+</resources>
