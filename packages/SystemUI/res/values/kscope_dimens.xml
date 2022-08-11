@@ -42,6 +42,10 @@
     <!-- QS Customizer -->
     <dimen name="kscope_qs_customize_side_paddings">16dp</dimen>
 
+    <!-- QS Drag Handle -->
+    <dimen name="kscope_qs_drag_handle_width">56dp</dimen>
+    <dimen name="kscope_qs_drag_handle_height">4dp</dimen>
+
     <!-- QS Footer -->
     <dimen name="kscope_qs_footer_height">154dp</dimen>
 

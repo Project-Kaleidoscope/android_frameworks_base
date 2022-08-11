@@ -89,6 +89,8 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
     private StatusIconContainer mIconContainer;
     private View mPrivacyChip;
 
+    private View mQSDragHandle;
+
     private TintedIconManager mTintedIconManager;
     private QSExpansionPathInterpolator mQSExpansionPathInterpolator;
     private StatusBarContentInsetsProvider mInsetsProvider;
@@ -147,6 +149,8 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
         mDatePrivacySeparator = findViewById(R.id.space);
         // Tint for the battery icons are handled in setupHost()
         mBatteryRemainingIcon = findViewById(R.id.batteryRemainingIcon);
+
+        mQSDragHandle = findViewById(R.id.qs_drag_handle);
 
         updateResources();
         Configuration config = mContext.getResources().getConfiguration();
@@ -352,6 +356,7 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
                 .addFloat(mDateView, "alpha", 0, 0, 1)
                 .addFloat(mClockDateView, "alpha", 1, 0, 0)
                 .addFloat(mQSCarriers, "alpha", 0, 1)
+                .addFloat(mQSDragHandle, "alpha", 1, 0)
                 .setListener(new TouchAnimator.ListenerAdapter() {
                     @Override
                     public void onAnimationAtEnd() {
