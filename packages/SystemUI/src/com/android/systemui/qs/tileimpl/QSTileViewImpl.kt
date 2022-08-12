@@ -523,17 +523,11 @@ open class QSTileViewImpl @JvmOverloads constructor(
     }
 
     private fun loadSideViewDrawableIfNecessary(state: QSTile.State) {
-        if (state.sideViewCustomDrawable != null) {
-            customDrawableView.setImageDrawable(state.sideViewCustomDrawable)
-            customDrawableView.visibility = VISIBLE
-            chevronView.visibility = GONE
-        } else if (state !is BooleanState || state.forceExpandIcon) {
-            customDrawableView.setImageDrawable(null)
-            customDrawableView.visibility = GONE
+        customDrawableView.setImageDrawable(null)
+        customDrawableView.visibility = GONE
+        if (state !is BooleanState || state.forceExpandIcon) {
             chevronView.visibility = VISIBLE
         } else {
-            customDrawableView.setImageDrawable(null)
-            customDrawableView.visibility = GONE
             chevronView.visibility = GONE
         }
     }
