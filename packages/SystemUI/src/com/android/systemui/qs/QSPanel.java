@@ -111,9 +111,9 @@ public class QSPanel extends LinearLayout implements Tunable {
         super(context, attrs);
         mUsingMediaPlayer = useQsMediaPlayer(context);
         mMediaTotalBottomMargin = getResources().getDimensionPixelSize(
-                R.dimen.quick_settings_bottom_margin_media);
+                R.dimen.kscope_quick_settings_bottom_margin_media);
         mMediaTopMargin = getResources().getDimensionPixelSize(
-                R.dimen.qs_tile_margin_vertical);
+                R.dimen.kscope_quick_settings_top_margin_media);
         mContext = context;
 
         setOrientation(VERTICAL);
