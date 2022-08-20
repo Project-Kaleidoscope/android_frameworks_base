@@ -210,6 +210,7 @@ import com.google.android.startop.iorap.IorapForwardingService;
 
 import ink.kaleidoscope.server.GmsManagerService;
 import ink.kaleidoscope.server.OptimizedChargeService;
+import ink.kaleidoscope.server.ParallelSpaceManagerService;
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -386,6 +387,8 @@ public final class SystemServer implements Dumpable {
             "ink.kaleidoscope.server.GmsManagerService";
     private static final String OPTIMIZED_CHARGE_SERVICE_CLASS =
             "ink.kaleidoscope.server.OptimizedChargeService";
+    private static final String PARALLEL_SPACE_SERVICE_CLASS =
+            "ink.kaleidoscope.server.ParallelSpaceManagerService";
 
     private static final String ROLE_SERVICE_CLASS = "com.android.role.RoleService";
     private static final String GAME_MANAGER_SERVICE_CLASS =
@@ -2668,6 +2671,10 @@ public final class SystemServer implements Dumpable {
 
         t.traceBegin("StartOptimizedChargeService");
         mSystemServiceManager.startService(OPTIMIZED_CHARGE_SERVICE_CLASS);
+        t.traceEnd();
+
+        t.traceBegin("StartParallelSpaceManagerService");
+        mSystemServiceManager.startService(PARALLEL_SPACE_SERVICE_CLASS);
         t.traceEnd();
 
         // These are needed to propagate to the runnable below.

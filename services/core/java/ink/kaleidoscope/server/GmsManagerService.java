@@ -51,7 +51,7 @@ import java.util.List;
 
 public final class GmsManagerService extends SystemService {
 
-    private static final String[] GMS_PACKAGES =
+    static final String[] GMS_PACKAGES =
     {
         "com.android.vending",
         "com.google.android.gms",
