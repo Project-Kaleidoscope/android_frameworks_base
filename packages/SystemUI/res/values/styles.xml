@@ -546,9 +546,11 @@
     </style>
 
     <!-- Media controls always have light background -->
-    <style name="MediaPlayer" parent="@*android:style/Theme.DeviceDefault.Light">
+    <style name="MediaPlayerBase" parent="@*android:style/Theme.DeviceDefault.Light" />
+
+    <style name="MediaPlayer" parent="MediaPlayerBase">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
-        <item name="android:backgroundTint">@android:color/system_accent2_50</item>
+        <item name="android:backgroundTint">@color/kscope_media_player_background_color</item>
     </style>
 
     <style name="MediaPlayer.ProgressBar" parent="@android:style/Widget.ProgressBar.Horizontal">
@@ -583,7 +585,7 @@
         <item name="android:singleLine">true</item>
     </style>
 
-    <style name="MediaPlayer.SolidButton">
+    <style name="MediaPlayer.SolidButton" parent="@*android:style/Theme.DeviceDefault.Light">
         <item name="android:backgroundTint">@color/media_player_solid_button_bg</item>
         <item name="android:tint">?android:attr/colorPrimary</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>

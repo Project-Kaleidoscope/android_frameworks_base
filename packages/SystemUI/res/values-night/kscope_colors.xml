@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Media Control / Media Player -->
+    <color name="kscope_media_player_background_color">@android:color/system_neutral1_800</color>
+
     <!-- QS Drag Handler -->
     <color name="kscope_qs_drag_handle_color">@android:color/system_neutral1_700</color>
 

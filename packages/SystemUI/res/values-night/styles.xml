@@ -71,4 +71,6 @@
         <item name="android:background">?android:attr/textColorSecondaryInverse</item>
     </style>
 
+    <style name="MediaPlayerBase" parent="@*android:style/Theme.DeviceDefault" />
+
 </resources>
