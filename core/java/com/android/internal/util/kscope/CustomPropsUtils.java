@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2020 The Pixel Experience Project
+ *               2022 Project Kaleidoscope
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,56 +14,52 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.internal.util.custom;
+package com.android.internal.util.kscope;
 
 import android.os.Build;
+import android.os.SystemProperties;
 import android.util.Log;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PixelPropsUtils {
+public class CustomPropsUtils {
 
     public static final String PACKAGE_GMS = "com.google.android.gms";
-    private static final String TAG = PixelPropsUtils.class.getSimpleName();
+
+    private static final String SPOOF_MUSIC_APPS = "persist.sys.disguise_props_for_music_app";
+
+    private static final String TAG = CustomPropsUtils.class.getSimpleName();
     private static final boolean DEBUG = false;
 
     private static final Map<String, Object> propsToChangePixel6;
     private static final String[] packagesToChangePixel6 = {
             "com.google.android.gms",
+            "com.google.android.gsf",
             "com.google.android.inputmethod.latin"
     };
-
-    private static final Map<String, Object> propsToChangePixel5;
 
     private static final Map<String, Object> propsToChangePixelXL;
     private static final String[] packagesToChangePixelXL = {
             "com.google.android.apps.photos"
     };
 
-    private static final Map<String, ArrayList<String>> propsToKeep;
-    private static final String[] extraPackagesToChange = {
-            "com.android.chrome",
-            "com.android.vending",
-            "com.breel.wallpapers20"
+    private static final Map<String, Object> propsToChangeMeizu;
+    private static final String[] packagesToChangeMeizu = {
+            "com.netease.cloudmusic",
+            "com.tencent.qqmusic",
+            "com.kugou.android",
+            "com.kugou.android.lite",
+            "cmccwm.mobilemusic",
+            "cn.kuwo.player",
+            "com.meizu.media.music"
     };
-
-    private static ArrayList<String> allProps = new ArrayList<>(
-            Arrays.asList("BRAND", "MANUFACTURER", "DEVICE", "PRODUCT", "MODEL", "FINGERPRINT"));
 
     private static volatile boolean sIsGms = false;
 
     static {
-        propsToKeep = new HashMap<>();
-        propsToKeep.put("com.google.android.settings.intelligence",
-                            new ArrayList<>(Collections.singletonList("FINGERPRINT")));
-        propsToKeep.put("com.google.android.GoogleCamera", allProps);
-        propsToKeep.put("com.google.android.apps.cameralite", allProps);
-        propsToKeep.put("com.google.android.dialer", allProps);
         propsToChangePixel6 = new HashMap<>();
         propsToChangePixel6.put("BRAND", "google");
         propsToChangePixel6.put("MANUFACTURER", "Google");
@@ -70,15 +67,7 @@ public class PixelPropsUtils {
         propsToChangePixel6.put("PRODUCT", "raven");
         propsToChangePixel6.put("MODEL", "Pixel 6 Pro");
         propsToChangePixel6.put(
-            "FINGERPRINT", "google/raven/raven:12/SQ3A.220705.003/8671607:user/release-keys");
-        propsToChangePixel5 = new HashMap<>();
-        propsToChangePixel5.put("BRAND", "google");
-        propsToChangePixel5.put("MANUFACTURER", "Google");
-        propsToChangePixel5.put("DEVICE", "redfin");
-        propsToChangePixel5.put("PRODUCT", "redfin");
-        propsToChangePixel5.put("MODEL", "Pixel 5");
-        propsToChangePixel5.put(
-            "FINGERPRINT", "google/redfin/redfin:12/SQ3A.220705.003.A1/8672226:user/release-keys");
+            "FINGERPRINT", "google/raven/raven:13/TP1A.220624.021/8877034:user/release-keys");
         propsToChangePixelXL = new HashMap<>();
         propsToChangePixelXL.put("BRAND", "google");
         propsToChangePixelXL.put("MANUFACTURER", "Google");
@@ -87,6 +76,13 @@ public class PixelPropsUtils {
         propsToChangePixelXL.put("MODEL", "Pixel XL");
         propsToChangePixelXL.put(
             "FINGERPRINT", "google/marlin/marlin:10/QP1A.191005.007.A3/5972272:user/release-keys");
+        propsToChangeMeizu = new HashMap<>();
+        propsToChangeMeizu.put("BRAND", "meizu");
+        propsToChangeMeizu.put("MANUFACTURER", "Meizu");
+        propsToChangeMeizu.put("DEVICE", "m1892");
+        propsToChangeMeizu.put("DISPLAY", "Flyme");
+        propsToChangeMeizu.put("PRODUCT", "meizu_16thPlus_CN");
+        propsToChangeMeizu.put("MODEL", "meizu 16th Plus");
     }
 
     public static void setProps(String packageName) {
@@ -96,34 +92,24 @@ public class PixelPropsUtils {
         if (packageName.equals(PACKAGE_GMS)) {
             sIsGms = true;
         }
-        if (packageName.startsWith("com.google.")
-                || Arrays.asList(extraPackagesToChange).contains(packageName)) {
-            Map<String, Object> propsToChange = propsToChangePixel5;
-
-            if (Arrays.asList(packagesToChangePixel6).contains(packageName)) {
-                propsToChange = propsToChangePixel6;
-            }
-
-            if (Arrays.asList(packagesToChangePixelXL).contains(packageName)) {
-                propsToChange = propsToChangePixelXL;
-            }
-
+        if (Arrays.asList(packagesToChangePixel6).contains(packageName)) {
             if (DEBUG) Log.d(TAG, "Defining props for: " + packageName);
-            for (Map.Entry<String, Object> prop : propsToChange.entrySet()) {
-                String key = prop.getKey();
-                Object value = prop.getValue();
-                if (propsToKeep.containsKey(packageName)
-                        && propsToKeep.get(packageName).contains(key)) {
-                    if (DEBUG) Log.d(TAG, "Not defining " + key + " prop for: " + packageName);
-                    continue;
-                }
-                if (DEBUG) Log.d(TAG, "Defining " + key + " prop for: " + packageName);
-                setPropValue(key, value);
+            for (Map.Entry<String, Object> prop : propsToChangePixel6.entrySet()) {
+                setPropValue(prop.getKey(), prop.getValue());
             }
         }
-        // Set proper indexing fingerprint
-        if (packageName.equals("com.google.android.settings.intelligence")) {
-            setPropValue("FINGERPRINT", Build.VERSION.INCREMENTAL);
+        if (Arrays.asList(packagesToChangePixelXL).contains(packageName)) {
+            if (DEBUG) Log.d(TAG, "Defining props for: " + packageName);
+            for (Map.Entry<String, Object> prop : propsToChangePixelXL.entrySet()) {
+                setPropValue(prop.getKey(), prop.getValue());
+            }
+        }
+        if ((SystemProperties.getBoolean(SPOOF_MUSIC_APPS, false)) &&
+            (Arrays.asList(packagesToChangeMeizu).contains(packageName))) {
+            if (DEBUG) Log.d(TAG, "Defining props for: " + packageName);
+            for (Map.Entry<String, Object> prop : propsToChangeMeizu.entrySet()) {
+                setPropValue(prop.getKey(), prop.getValue());
+            }
         }
     }
 

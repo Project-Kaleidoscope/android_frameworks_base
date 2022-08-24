@@ -65,8 +65,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
-import com.android.internal.util.custom.PixelPropsUtils;
-import com.android.internal.util.kscope.MeizuPropsUtils;
+import com.android.internal.util.kscope.CustomPropsUtils;
 
 /**
  * Base class for implementing application instrumentation code.  When running
@@ -96,8 +95,6 @@ public class Instrumentation {
     private static final String TAG = "Instrumentation";
 
     private static final long CONNECT_TIMEOUT_MILLIS = 5000;
-
-    private static final String DISGUISE_PROPS_FOR_MUSIC_APP = "persist.sys.disguise_props_for_music_app";
 
     /**
      * @hide
@@ -1195,10 +1192,7 @@ public class Instrumentation {
                 .instantiateApplication(cl, className);
         app.attach(context);
         String packageName = app.getPackageName();
-        PixelPropsUtils.setProps(packageName);
-        if (SystemProperties.getBoolean(DISGUISE_PROPS_FOR_MUSIC_APP, false)) {
-            MeizuPropsUtils.setProps(packageName);
-        }
+        CustomPropsUtils.setProps(packageName);
         return app;
     }
     
@@ -1217,10 +1211,7 @@ public class Instrumentation {
         Application app = (Application)clazz.newInstance();
         app.attach(context);
         String packageName = app.getPackageName();
-        PixelPropsUtils.setProps(packageName);
-        if (SystemProperties.getBoolean(DISGUISE_PROPS_FOR_MUSIC_APP, false)) {
-            MeizuPropsUtils.setProps(packageName);
-        }
+        CustomPropsUtils.setProps(packageName);
         return app;
     }
 
