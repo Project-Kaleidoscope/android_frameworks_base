@@ -18,8 +18,10 @@ package com.android.server.biometrics.sensors;
 
 import android.annotation.NonNull;
 import android.content.Context;
+import android.database.ContentObserver;
 import android.hardware.biometrics.BiometricConstants;
 import android.media.AudioAttributes;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.Process;
@@ -27,6 +29,7 @@ import android.os.RemoteException;
 import android.os.SystemClock;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.provider.Settings;
 import android.util.Slog;
 
 /**
@@ -54,6 +57,15 @@ public abstract class AcquisitionClient<T> extends HalClientMonitor<T> implement
     protected final boolean mShouldVibrate;
     private boolean mShouldSendErrorToClient = true;
     private boolean mAlreadyCancelled;
+    private boolean mHapticFeedbackEnabled;
+
+    private ContentObserver mVibrationObserver = new ContentObserver(Handler.getMain()) {
+        @Override
+        public void onChange(boolean selfChange) {
+            mHapticFeedbackEnabled = Settings.System.getInt(getContext().getContentResolver(),
+                Settings.System.HAPTIC_FEEDBACK_ENABLED, 0) != 0;
+        }
+    };
 
     /**
      * Stops the HAL operation specific to the ClientMonitor subclass.
@@ -68,6 +80,11 @@ public abstract class AcquisitionClient<T> extends HalClientMonitor<T> implement
                 statsAction, statsClient);
         mPowerManager = context.getSystemService(PowerManager.class);
         mShouldVibrate = shouldVibrate;
+
+        context.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.HAPTIC_FEEDBACK_ENABLED), false,
+                mVibrationObserver);
+        mVibrationObserver.onChange(false);
     }
 
     @Override
@@ -193,6 +210,8 @@ public abstract class AcquisitionClient<T> extends HalClientMonitor<T> implement
     }
 
     protected final void vibrateSuccess() {
+        if (!mHapticFeedbackEnabled)
+            return;
         Vibrator vibrator = getContext().getSystemService(Vibrator.class);
         if (vibrator != null) {
             vibrator.vibrate(Process.myUid(),

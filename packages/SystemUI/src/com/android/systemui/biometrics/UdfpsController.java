@@ -42,7 +42,6 @@ import android.hardware.fingerprint.FingerprintManager;
 import android.hardware.fingerprint.FingerprintSensorPropertiesInternal;
 import android.hardware.fingerprint.IUdfpsOverlayController;
 import android.hardware.fingerprint.IUdfpsOverlayControllerCallback;
-import android.media.AudioAttributes;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.PowerManager;
@@ -51,7 +50,6 @@ import android.os.RemoteException;
 import android.os.Trace;
 import android.os.UserHandle;
 import android.os.VibrationEffect;
-import android.os.Vibrator;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
@@ -81,6 +79,7 @@ import com.android.systemui.statusbar.phone.UnlockedScreenOffAnimationController
 import com.android.systemui.statusbar.phone.panelstate.PanelExpansionStateManager;
 import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
+import com.android.systemui.statusbar.VibratorHelper;
 import com.android.systemui.util.concurrency.DelayableExecutor;
 import com.android.systemui.util.concurrency.Execution;
 import com.android.systemui.util.settings.SecureSettings;
@@ -128,7 +127,7 @@ public class UdfpsController implements DozeReceiver {
     @NonNull private final DumpManager mDumpManager;
     @NonNull private final SystemUIDialogManager mDialogManager;
     @NonNull private final KeyguardUpdateMonitor mKeyguardUpdateMonitor;
-    @Nullable private final Vibrator mVibrator;
+    @NonNull private final VibratorHelper mVibratorHelper;
     @NonNull private final FalsingManager mFalsingManager;
     @NonNull private final PowerManager mPowerManager;
     @NonNull private final AccessibilityManager mAccessibilityManager;
@@ -179,17 +178,8 @@ public class UdfpsController implements DozeReceiver {
     private final SecureSettings mSecureSettings;
     private boolean mScreenOffFod;
 
-    @VisibleForTesting
-    public static final AudioAttributes VIBRATION_SONIFICATION_ATTRIBUTES =
-            new AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    // vibration will bypass battery saver mode:
-                    .setUsage(AudioAttributes.USAGE_ASSISTANCE_ACCESSIBILITY)
-                    .build();
-
     // haptic to use for successful device entry
-    public static final VibrationEffect EFFECT_CLICK =
-            VibrationEffect.get(VibrationEffect.EFFECT_CLICK);
+    public static final int EFFECT_CLICK = VibrationEffect.EFFECT_CLICK;
 
     private final ScreenLifecycle.Observer mScreenObserver = new ScreenLifecycle.Observer() {
         @Override
@@ -606,7 +596,7 @@ public class UdfpsController implements DozeReceiver {
             @NonNull AccessibilityManager accessibilityManager,
             @NonNull LockscreenShadeTransitionController lockscreenShadeTransitionController,
             @NonNull ScreenLifecycle screenLifecycle,
-            @Nullable Vibrator vibrator,
+            @NonNull VibratorHelper vibratorHelper,
             @NonNull UdfpsHapticsSimulator udfpsHapticsSimulator,
             @NonNull UdfpsHbmProvider hbmProvider,
             @NonNull KeyguardStateController keyguardStateController,
@@ -620,7 +610,7 @@ public class UdfpsController implements DozeReceiver {
             @NonNull SecureSettings secureSettings) {
         mContext = context;
         mExecution = execution;
-        mVibrator = vibrator;
+        mVibratorHelper = vibratorHelper;
         mInflater = inflater;
         // The fingerprint manager is queried for UDFPS before this class is constructed, so the
         // fingerprint manager should never be null.
@@ -710,14 +700,7 @@ public class UdfpsController implements DozeReceiver {
      */
     @VisibleForTesting
     public void playStartHaptic() {
-        if (mVibrator != null) {
-            mVibrator.vibrate(
-                    Process.myUid(),
-                    mContext.getOpPackageName(),
-                    EFFECT_CLICK,
-                    "udfps-onStart-click",
-                    VIBRATION_SONIFICATION_ATTRIBUTES);
-        }
+        mVibratorHelper.vibrate(EFFECT_CLICK);
     }
 
     @Nullable

@@ -33,9 +33,7 @@ import android.graphics.drawable.AnimatedStateListDrawable;
 import android.hardware.biometrics.BiometricSourceType;
 import android.hardware.biometrics.SensorLocationInternal;
 import android.hardware.fingerprint.FingerprintSensorPropertiesInternal;
-import android.media.AudioAttributes;
 import android.os.Process;
-import android.os.Vibrator;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.MathUtils;
@@ -63,6 +61,7 @@ import com.android.systemui.statusbar.StatusBarState;
 import com.android.systemui.statusbar.phone.dagger.StatusBarComponent;
 import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
+import com.android.systemui.statusbar.VibratorHelper;
 import com.android.systemui.util.ViewController;
 import com.android.systemui.util.concurrency.DelayableExecutor;
 
@@ -84,11 +83,6 @@ public class LockIconViewController extends ViewController<LockIconView> impleme
     private static final float sDefaultDensity =
             (float) DisplayMetrics.DENSITY_DEVICE_STABLE / (float) DisplayMetrics.DENSITY_DEFAULT;
     private static final int sLockIconRadiusPx = (int) (sDefaultDensity * 36);
-    private static final AudioAttributes VIBRATION_SONIFICATION_ATTRIBUTES =
-            new AudioAttributes.Builder()
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
-                .build();
     private static final long LONG_PRESS_TIMEOUT = 200L; // milliseconds
 
     @NonNull private final KeyguardUpdateMonitor mKeyguardUpdateMonitor;
@@ -106,7 +100,7 @@ public class LockIconViewController extends ViewController<LockIconView> impleme
 
     @NonNull private CharSequence mUnlockedLabel;
     @NonNull private CharSequence mLockedLabel;
-    @Nullable private final Vibrator mVibrator;
+    @NonNull private final VibratorHelper mVibratorHelper;
     @Nullable private final AuthRippleController mAuthRippleController;
 
     // Tracks the velocity of a touch to help filter out the touches that move too fast.
@@ -157,7 +151,7 @@ public class LockIconViewController extends ViewController<LockIconView> impleme
             @NonNull AccessibilityManager accessibilityManager,
             @NonNull ConfigurationController configurationController,
             @NonNull @Main DelayableExecutor executor,
-            @Nullable Vibrator vibrator,
+            @NonNull VibratorHelper vibratorHelper,
             @Nullable AuthRippleController authRippleController,
             @NonNull @Main Resources resources
     ) {
@@ -171,7 +165,7 @@ public class LockIconViewController extends ViewController<LockIconView> impleme
         mAccessibilityManager = accessibilityManager;
         mConfigurationController = configurationController;
         mExecutor = executor;
-        mVibrator = vibrator;
+        mVibratorHelper = vibratorHelper;
         mAuthRippleController = authRippleController;
 
         mMaxBurnInOffsetX = resources.getDimensionPixelSize(R.dimen.udfps_burn_in_offset_x);
@@ -563,13 +557,8 @@ public class LockIconViewController extends ViewController<LockIconView> impleme
         switch(event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_HOVER_ENTER:
-                if (mVibrator != null && !mDownDetected) {
-                    mVibrator.vibrate(
-                            Process.myUid(),
-                            getContext().getOpPackageName(),
-                            UdfpsController.EFFECT_CLICK,
-                            "lock-icon-down",
-                            VIBRATION_SONIFICATION_ATTRIBUTES);
+                if (!mDownDetected) {
+                    mVibratorHelper.vibrate(UdfpsController.EFFECT_CLICK);
                 }
 
                 // The pointer that causes ACTION_DOWN is always at index 0.
@@ -650,15 +639,8 @@ public class LockIconViewController extends ViewController<LockIconView> impleme
             mOnGestureDetectedRunnable.run();
         }
 
-        if (mVibrator != null) {
-            // play device entry haptic (same as biometric success haptic)
-            mVibrator.vibrate(
-                    Process.myUid(),
-                    getContext().getOpPackageName(),
-                    UdfpsController.EFFECT_CLICK,
-                    "lock-icon-device-entry",
-                    VIBRATION_SONIFICATION_ATTRIBUTES);
-        }
+        // play device entry haptic (same as biometric success haptic)
+        mVibratorHelper.vibrate(UdfpsController.EFFECT_CLICK);
 
         mKeyguardViewController.showBouncer(/* scrim */ true);
     }
@@ -672,9 +654,6 @@ public class LockIconViewController extends ViewController<LockIconView> impleme
         if (mVelocityTracker != null) {
             mVelocityTracker.recycle();
             mVelocityTracker = null;
-        }
-        if (mVibrator != null) {
-            mVibrator.cancel();
         }
     }
 
