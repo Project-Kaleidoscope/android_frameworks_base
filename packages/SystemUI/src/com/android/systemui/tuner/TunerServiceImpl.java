@@ -248,6 +248,9 @@ public class TunerServiceImpl extends TunerService {
 
     private void reloadAll() {
         for (String key : mTunableLookup.keySet()) {
+            if (ArrayUtils.contains(RESET_EXCEPTION_LIST, key)) {
+                continue;
+            }
             String value = Settings.Secure.getStringForUser(mContentResolver, key,
                     mCurrentUser);
             for (Tunable tunable : mTunableLookup.get(key)) {
@@ -268,9 +271,6 @@ public class TunerServiceImpl extends TunerService {
 
         // A couple special cases.
         for (String key : mTunableLookup.keySet()) {
-            if (ArrayUtils.contains(RESET_EXCEPTION_LIST, key)) {
-                continue;
-            }
             Settings.Secure.putStringForUser(mContentResolver, key, null, user);
         }
     }
