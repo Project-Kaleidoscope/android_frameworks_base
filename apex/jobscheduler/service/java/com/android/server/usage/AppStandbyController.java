@@ -1513,21 +1513,7 @@ public class AppStandbyController
                         .noteRestrictionAttempt(packageName, userId, elapsedRealtime, reason);
 
                 if (isForcedByUser) {
-                    // Only user force can bypass the delay restriction. If the user forced the
-                    // app into the RESTRICTED bucket, then a toast confirming the action
-                    // shouldn't be surprising.
-                    if (Build.IS_DEBUGGABLE) {
-                        Toast.makeText(mContext,
-                                // Since AppStandbyController sits low in the lock hierarchy,
-                                // make sure not to call out with the lock held.
-                                mHandler.getLooper(),
-                                mContext.getResources().getString(
-                                        R.string.as_app_forced_to_restricted_bucket, packageName),
-                                Toast.LENGTH_SHORT)
-                                .show();
-                    } else {
-                        Slog.i(TAG, packageName + " restricted by user");
-                    }
+                    Slog.i(TAG, packageName + " restricted by user");
                 } else {
                     final long timeUntilRestrictPossibleMs = app.lastUsedByUserElapsedTime
                             + mInjector.getAutoRestrictedBucketDelayMs() - elapsedRealtime;
